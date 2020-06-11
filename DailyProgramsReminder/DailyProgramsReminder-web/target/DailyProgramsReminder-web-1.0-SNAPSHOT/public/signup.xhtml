@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Daily Programs Reminder</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h2>Daily Programs Reminder</h2>
+            <h3>Create a new account</h3>
+            
+            <p:messages id="msgs" />
+            
+            <div class="ui-g">
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="username" value="Username: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="username" title="Username" value="#{userSignupManagedBean.username}" autocomplete="off" size="25" 
+                                required="true" 
+                                requiredMessage="Username must not be blank!"
+                                maxlength="50">
+                        
+                        <f:validator validatorId="validator.usernameValidator" />
+                        <p:ajax update="msgUsername" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="username" id="msgUsername" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="password" value="Password: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:password id="password" title="Password" value="#{userSignupManagedBean.password}" 
+                                binding="#{password}"
+                                autocomplete="off" size="25" 
+                                feedback="true"
+                                required="true" 
+                                requiredMessage="Password must not be blank!"
+                                maxlength="50">
+                        
+                        <f:validator validatorId="validator.passwordValidator" />
+                        <p:ajax update="msgPassword" event="keyup" />
+                    </p:password>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="password" id="msgPassword" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="cPassword" value="Confirm Password: "/>
+                </div>
+                <div class="ui-g-4">
+                    <p:password id="cPassword" title="Confrim Password" autocomplete="off" size="25"
+                                required="true" 
+                                requiredMessage="Confirm password must not be blank!"
+                                maxlength="50">
+                    
+                        <f:attribute name="password" value="#{password.value}" />
+                        
+                        <f:validator validatorId="validator.passwordValidator" />
+                        <p:ajax update="msgcPassword" event="keyup" />
+                    </p:password>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="cPassword" id="msgcPassword" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="email" value="Email: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="email" title="Email" value="#{userSignupManagedBean.email}" autocomplete="off" size="25"
+                                required="true" 
+                                requiredMessage="Email must not be blank!"
+                                maxlength="100">
+                    
+                        <f:validator validatorId="validator.emailValidator" />
+                        <p:ajax update="msgEmail" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="email" id="msgEmail" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="firstname" value="Firstname: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="firstname" title="Firstname" value="#{userSignupManagedBean.firstname}" autocomplete="off" size="25"
+                                required="true" 
+                                requiredMessage="Firstname must not be blank!"
+                                maxlength="50">
+                    
+                        <f:validator validatorId="validator.stringValidator" />
+                        <p:ajax update="msgFirstname" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="firstname" id="msgFirstname" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="lastname" value="Lastname: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="lastname" title="Lastname" value="#{userSignupManagedBean.lastname}" autocomplete="off" size="25" 
+                                required="true" 
+                                requiredMessage="Lastname must not be blank!"
+                                maxlength="50">
+                    
+                        <f:validator validatorId="validator.stringValidator" />
+                        <p:ajax update="msgLastname" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="lastname" id="msgLastname" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-1">
+                    <h:commandButton id="submit" value="Signup" style="font-weight: bold; 
+                                     font-size: 15px; border: solid black 1px; padding: 10px;
+                                     border-radius: 5px"
+                                     action="#{userSignupManagedBean.signup}"/>
+                </div>
+                <div class="ui-g-6"></div>
+                
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-2">
+                    <p:link outcome="login" value="go back to login" style="font-size: 15px; margin: auto" />
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

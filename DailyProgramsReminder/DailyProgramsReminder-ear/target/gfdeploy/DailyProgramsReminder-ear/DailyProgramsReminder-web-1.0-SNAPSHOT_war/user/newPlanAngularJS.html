@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html data-ng-app="dpr">
+    <head>
+        <title>Daily Programs Reminder</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+    </head>
+    <body data-ng-controller="createPlanCtrl">
+        <style>
+            .container{
+                padding-top: 10px;
+            }
+        </style>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand/logo -->
+            <a class="navbar-brand" href="#">DPR</a>
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.xhtml">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="plans.xhtml">View All Plans</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.xhtml">View User Profile</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="container">
+            <form name="createPlanForm" novalidate="novalidate">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="planTitle">Plan Title:</label>
+                            <input type="text" class="form-control" placeholder="Plan Title" name="PlanTitle" id="planTitle" data-ng-validate="planTitle" data-ng-model="planTitle" data-ng-model-options="{updateOn: 'blur'}" required="required"/>
+                            <span data-ng-show="createPlanForm.planTitle.$error.required" class="text-danger">
+                                Please provide a title for the plan
+                            </span>
+                            <span data-ng-show="createPlanForm.$error.noValidPlanTitle" class="text-danger">
+                                Plan Title must only contain alphanumeric letters and numbers
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="planDescription">Plan Description:</label>
+                            <textarea class="form-control" placeholder="Plan Description" id="planDescription" 
+                                      data-ng-model="planDescription" data-ng-validate="planDescription"
+                                      style="min-width: 300px; min-height: 100px"></textarea>
+                            <span data-ng-show="createPlanForm.$error.noValidPlanDescription" class="text-danger">
+                                Plan Description must only contain alphanumeric letters and numbers
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Plan Date:</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="planDatetimepicker" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#planDatetimepicker"
+                                       data-ng-model="planDate" required="required" style="min-width: 200px"/>
+                                <div class="input-group-append" data-target="#planDatetimepicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                            <span data-ng-show="createPlanForm.planDate.$error.required" class="text-danger">
+                                Please provide a date for the plan
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="planRepeat">Plan Repeat:</label>
+                            <select class="form-control" id="planRepeat" data-ng-model="planRepeat" style="min-width: 200px">
+                                <option value="0">Never</option>
+                                <option value="1">Hourly</option>
+                                <option value="2">Daily</option>
+                                <option value="3">Weekly</option>
+                                <option value="4">Biweekly</option>
+                                <option value="5">Monthly</option>
+                                <option value="6">Evert 3 Months</option>
+                                <option value="7">Every 6 Months</option>
+                                <option value="8">Yearly</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Plan End Repeat:</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="planEndRepeatDatetimepicker" data-target-input="nearest">
+                                <input data-ng-disabled="planRepeat === '0'" type="text" 
+                                       class="form-control datetimepicker-input" data-target="#planEndRepeatDatetimepicker" 
+                                       data-ng-model="planEndRepeat" data-ng-required="planRepeat!=='0'" style="min-width: 200px"/>
+                                <div class="input-group-append" data-target="#planEndRepeatDatetimepicker" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                            <span data-ng-show="createPlanForm.planDate.$error.required" class="text-danger">
+                                Please provide a date for ending the plan repeat
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="planPriority">Plan Priority:</label>
+                            <select class="form-control" id="planPriority" data-ng-model="planPriority" style="min-width: 200px">
+                                <option value="0">None</option>
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>
+                            <button type="button" class="btn btn-success" data-ng-click="createPlan()" 
+                                    data-ng-disabled="createPlanForm.$pristine || createPlanForm.$invalid">Create</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="home.xhtml" data-ng-click="redirect()" role="button" class="btn">Go to Home</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="plans.xhtml" role="button" class="btn">or View All Plans</a>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>        
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script type="text/javascript" src="../angular-beans.js"></script>
+        <script type="text/javascript" src="newPlanApp.js"></script>
+    </body>
+</html>

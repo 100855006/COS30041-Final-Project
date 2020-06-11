@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Daily Programs Reminder</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1>Daily Programs Reminder - Dashboard</h1>
+            <h2>View plan #{plansManagedBean.planTitle}</h2>
+            <br />
+            <p:panelGrid columns="4" layout="grid" style="text-align: center;">
+                <p:link outcome="home" value="Home" />
+                <p:link outcome="plans" value="View All Plans" />
+                <p:link outcome="profile" value="View User Profile" />
+                <h:commandButton id="logout" value="Logout" style="cursor: pointer; 
+                                 font-size: 18px; border: none; background-color: white; color: red; 
+                                 text-decoration: underline"
+                                 action="#{userManagedBean.logoutResult()}"/>
+            </p:panelGrid>
+            <br />
+            <p:messages id="msgs" />
+            <div class="ui-g">
+                <div class="ui-g-3"></div>
+                <div class="ui-g-6">
+                    <p:selectBooleanButton id="planCompleted" value="#{plansManagedBean.planCompleted}" 
+                                       onLabel="Plan is completed" offLabel="Plan is not completed" 
+                                       onIcon="pi pi-check" offIcon="pi pi-times"  />
+                </div>
+                <div class="ui-g-3" />
+                  
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="planId" value="Plan ID " />
+                </div>
+                <div class="ui-g-4">
+                    <h:outputText id="planId" title="Plan ID" value="#{plansManagedBean.planId}" />
+                </div>
+                <div class="ui-g-3" />
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="planTitle" value="Plan Title: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="planTitle" title="Plan Title" value="#{plansManagedBean.planTitle}" autocomplete="off" size="25" 
+                                 required="true" 
+                                 requiredMessage="Plan Title must not be blank!"
+                                 maxlength="50">
+
+                        <f:validator validatorId="validator.stringValidator" />
+                        <p:ajax update="msgPlanTitle" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="planTitle" id="msgPlanTitle" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="planDescription" value="Plan Description: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputTextarea rows="6" cols="33" id="planDescription"
+                                     title="Plan Description" value="#{plansManagedBean.planDescription}">
+
+                        <p:ajax update="msgPlanDescription" event="keyup" />
+                    </p:inputTextarea>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="planDescription" id="msgPlanDescription" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="planDate" value="Plan Date: "/>
+                </div>
+                <div class="ui-g-4">
+                    <p:calendar id="planDate" title="Plan Date" value="#{plansManagedBean.planDate}" pattern="dd/MM/yyyy HH:mm"  
+                                binding="#{planDate}"
+                                requiredMessage="Plan Date must not be blank!"
+                                required="true">
+
+                        <f:attribute name="minDate" value="#{plansManagedBean.planDate}" />
+                        <f:validator validatorId="validator.planDateValidator" />
+                        <p:ajax update="msgPlanDate" event="change" />
+                        <p:ajax update="msgPlanEndRepeat" event="change" />
+                    </p:calendar>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="planDate" id="msgPlanDate" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="planRepeat" value="Plan Repeat: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:selectOneMenu id="planRepeat" value="#{plansManagedBean.planRepeat}" style="width:125px"
+                                     binding="#{planRepeat}"
+                                     required="true"
+                                     requiredMessage="Plan Repeat must not be blank!">
+                        <f:selectItem itemLabel="Never" itemValue="0" />
+                        <f:selectItem itemLabel="Hourly" itemValue="1" />
+                        <f:selectItem itemLabel="Daily" itemValue="2" />
+                        <f:selectItem itemLabel="Weekly" itemValue="3" />
+                        <f:selectItem itemLabel="Biweekly" itemValue="4" />
+                        <f:selectItem itemLabel="Monthly" itemValue="5" />
+                        <f:selectItem itemLabel="Every 3 Months" itemValue="6" />
+                        <f:selectItem itemLabel="Every 6 Months" itemValue="7" />
+                        <f:selectItem itemLabel="Yearly" itemValue="8" />
+
+                        <p:ajax event="change" update="planEndRepeat" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-3"></div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="planEndRepeat" value="Plan End Repeat: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:calendar id="planEndRepeat" title="Plan End Repeat" value="#{plansManagedBean.planEndRepeat}" pattern="dd/MM/yyyy HH:mm"   
+                                requiredMessage="Plan End Repeat must not be blank!"
+                                required="true"
+                                disabled="#{planRepeat.value == '0' ? true : false}">
+
+                        <f:attribute name="minDate" value="#{planDate.value}" />
+                        <f:validator validatorId="validator.planDateValidator" />
+                        <p:ajax update="msgPlanEndRepeat" event="change" />
+                    </p:calendar>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="planEndRepeat" id="msgPlanEndRepeat" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="planPriority" value="Plan Priority: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:selectOneMenu id="planPriority" value="#{plansManagedBean.planPriority}" style="width:125px"
+                                     required="true"
+                                     requiredMessage="Plan Priority must not be blank!">
+                        <f:selectItem itemLabel="None" itemValue="0" />
+                        <f:selectItem itemLabel="Low" itemValue="1" />
+                        <f:selectItem itemLabel="Medium" itemValue="2" />
+                        <f:selectItem itemLabel="High" itemValue="3" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-3"></div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-1">
+                    <h:commandButton id="submit" value="Update" style="font-weight: bold; 
+                                     font-size: 15px; border: solid black 1px; padding: 10px;
+                                     border-radius: 5px"
+                                     action="#{plansManagedBean.editPlan}"/>
+                </div>
+                <div class="ui-g-6"></div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-2">
+                    <p:link outcome="plans" value="go to View all plans" style="font-size: 15px; margin: auto" />
+                    <br />
+                    <p:link outcome="home" value="go to Home page" style="font-size: 15px; margin: auto" />
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

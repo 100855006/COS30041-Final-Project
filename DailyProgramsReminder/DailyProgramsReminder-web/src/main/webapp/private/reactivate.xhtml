@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Daily Programs Reminder</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h2>Your account is deactivated!</h2>
+            <h3>Choose one of the options below to proceed:</h3>
+            <br />
+            <br />
+            <p:panelGrid columns="3" layout="grid" style="text-align: center;">
+                <h:commandButton id="reactivate" value="Reactivate Account" style="font-weight: bold; 
+                                 font-size: 15px; border: none; background-color: white; color: blue; 
+                                 text-decoration: underline"
+                                 action="#{userManagedBean.reactivateUserAccount}"/>
+                <h:commandButton id="cancel" value="Stay Deactive" style="font-weight: bold; 
+                                 font-size: 15px; border: none; background-color: white; color: blue; 
+                                 text-decoration: underline"
+                                 action="#{userManagedBean.logoutResult}"/>
+                <h:commandButton id="delete" value="Permanently Delete Account" style="font-weight: bold; 
+                                 font-size: 10px; border: none; background-color: white; color: blue; 
+                                 text-decoration: underline"
+                                 action="#{userManagedBean.deleteUserAccountPermanently}"/>
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

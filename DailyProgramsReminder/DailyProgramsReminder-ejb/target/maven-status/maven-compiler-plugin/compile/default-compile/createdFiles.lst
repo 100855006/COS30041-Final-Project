@@ -1,0 +1,6 @@
+bean\PlansBean.class
+entity\User.class
+bean\UsersManagementFacade.class
+entity\User_.class
+bean\PlansBeanLocal.class
+bean\PlansManagementFacade.class

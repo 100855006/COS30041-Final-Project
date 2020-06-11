@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Daily Programs Reminder</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h2>Daily Programs Reminder</h2>
+            <h3>Update Profile</h3>
+            
+            <p:messages id="msgs" />
+            
+            <div class="ui-g">
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="username" value="Username: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="username" title="Username" value="#{userManagedBean.username}" disabled="true" />
+                </div>
+                <div class="ui-g-3"></div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="email" value="Email: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="email" title="Email" value="#{userManagedBean.email}" autocomplete="off" size="25"
+                                required="true" 
+                                requiredMessage="Email must not be blank!"
+                                maxlength="100">
+                    
+                        <f:validator validatorId="validator.emailValidator" />
+                        <p:ajax update="msgEmail" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="email" id="msgEmail" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="firstname" value="Firstname: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="firstname" title="Firstname" value="#{userManagedBean.firstname}" autocomplete="off" size="25"
+                                required="true" 
+                                requiredMessage="Firstname must not be blank!"
+                                maxlength="50">
+                    
+                        <f:validator validatorId="validator.stringValidator" />
+                        <p:ajax update="msgFirstname" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="firstname" id="msgFirstname" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2">
+                    <p:outputLabel for="lastname" value="Lastname: " />
+                </div>
+                <div class="ui-g-4">
+                    <p:inputText id="lastname" title="Lastname" value="#{userManagedBean.lastname}" autocomplete="off" size="25" 
+                                required="true" 
+                                requiredMessage="Lastname must not be blank!"
+                                maxlength="50">
+                    
+                        <f:validator validatorId="validator.stringValidator" />
+                        <p:ajax update="msgLastname" event="keyup" />
+                    </p:inputText>
+                </div>
+                <div class="ui-g-3">
+                    <p:message for="lastname" id="msgLastname" display="icon" />
+                </div>
+
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-2">
+                    <h:commandButton id="submit" value="Update Profile" style="font-weight: bold; 
+                                     font-size: 15px; border: solid black 1px; padding: 10px;
+                                     border-radius: 5px"
+                                     action="#{userManagedBean.updateUserProfile}"/>
+                </div>
+                <div class="ui-g-5"></div>
+                
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-7">
+                    <p:link outcome="updatePassword" value="Update your password" style="font-size: 15px; margin: auto" />
+                </div>
+                
+                <br /><br />
+                
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-7">
+                    <p:link outcome="home" value="go back to home page" style="font-size: 15px; margin: auto" />
+                </div>
+                
+                <br /><br /><br /><br /><br />
+                
+                <div class="ui-g-3"></div>
+                <div class="ui-g-2"></div>
+                <div class="ui-g-7">
+                    <h:commandButton id="deactivate" value="Deactivate your account temporarily" style="cursor: pointer; 
+                                 font-size: 12px; border: none; background-color: white; color: red; 
+                                 text-decoration: underline"
+                                 action="#{userManagedBean.deactivateUserAccount()}"/>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

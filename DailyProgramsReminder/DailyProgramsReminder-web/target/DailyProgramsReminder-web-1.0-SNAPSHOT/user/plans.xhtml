@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Daily Programs Reminder</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1>Daily Programs Reminder - Dashboard</h1>
+            <h2>List of all plans for #{userManagedBean.firstname} #{userManagedBean.lastname}</h2>
+            <br />
+            <p:panelGrid columns="4" layout="grid" style="text-align: center;">
+                <p:link outcome="home" value="Home" />
+                <p:link outcome="newPlanAngularJS.html" value="Create a New Plan" />
+                <p:link outcome="profile" value="View User Profile" />
+                <h:commandButton id="logout" value="Logout" style="cursor: pointer; 
+                                 font-size: 18px; border: none; background-color: white; color: red; 
+                                 text-decoration: underline"
+                                 action="#{userManagedBean.logoutResult()}"/>
+            </p:panelGrid>
+            <br />
+            <div class="ui-g">
+                <div class="ui-g-6" style="text-align: center;">
+                    <h:commandButton id="showAllPlans" value="Show All Plans" style="font-weight: bold; 
+                                     font-size: 20px; border: solid black 1px; padding: 10px; width: 200px;
+                                     border-radius: 5px; background-color: blueviolet"
+                                     action="#{plansManagedBean.setSearchTypeForResult('ALL')}"/>
+                </div>
+                <div class="ui-g-6" style="text-align: center;">
+                    <h:commandButton id="showIncompletePlans" value="Show Incomplete Plans" style="font-weight: bold; 
+                                     font-size: 20px; border: solid black 1px; padding: 10px; width: 250px;
+                                     border-radius: 5px; background-color: blueviolet"
+                                     action="#{plansManagedBean.setSearchTypeForResult('INCOMPLETE')}"/>
+                </div>
+            </div>
+            <p:messages id="msgs" />
+            <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">
+                <div class="ui-g">
+                    <div class="ui-g-1" style="margin-top: 5px;">
+                        <p:outputLabel for="title" value="Plan Title: " />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:inputText id="title" title="Plan Title" value="#{plansManagedBean.title}" autocomplete="off" size="25" 
+                                     maxlength="50">
+                            <f:validateRegex pattern="^[a-zA-Z0-9_. ]*$"/>
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-8">
+                        <h:commandButton id="searchTitle" value="Search" style="font-weight: bold; 
+                                         font-size: 13px; border: solid black 1px; padding: 5px;
+                                         border-radius: 5px; background-color: blueviolet"
+                                         action="#{plansManagedBean.setSearchTypeForResult('TITLE')}"/>
+                    </div>
+
+                    <div class="ui-g-1" style="margin-top: 5px;">
+                        <p:outputLabel for="singleDate" value="Plan Date: " />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:calendar id="singleDate" value="#{plansManagedBean.singleDate}" />
+                    </div>
+                    <div class="ui-g-8">
+                        <h:commandButton id="searchSingleDate" value="Search" style="font-weight: bold; 
+                                         font-size: 13px; border: solid black 1px; padding: 5px;
+                                         border-radius: 5px; background-color: blueviolet"
+                                         action="#{plansManagedBean.setSearchTypeForResult('SINGLE_DATE')}"/>
+                    </div>
+
+                    <div class="ui-g-1" style="margin-top: 5px;">
+                        <p:outputLabel for="fromDate" value="From Date: " />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:calendar id="fromDate" value="#{plansManagedBean.startDate}" />
+                    </div>
+                    <div class="ui-g-1" style="margin-top: 5px;">
+                        <p:outputLabel for="toDate" value="To Date: " />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:calendar id="toDate" value="#{plansManagedBean.endDate}" />
+                    </div>
+                    <div class="ui-g-4">
+                        <h:commandButton id="searchRangeDate" value="Search" style="font-weight: bold; 
+                                         font-size: 13px; border: solid black 1px; padding: 5px;
+                                         border-radius: 5px; background-color: blueviolet"
+                                         action="#{plansManagedBean.setSearchTypeForResult('DATE_RANGE')}"/>
+                    </div>
+                </div>
+            </p:fieldset>
+            <br />
+            <p:outputLabel value="#{plansManagedBean.getSearchResultText()}" />
+            <p:dataTable var="plan" value="#{plansManagedBean.getPlans()}" style="text-align: center;">
+                <p:column headerText="ID">
+                    <h:outputText value="#{plan.getId()}" />
+                </p:column>
+
+                <p:column headerText="Title">
+                    <h:outputText value="#{plan.getTitle()}" />
+                </p:column>
+
+                <p:column headerText="Date">
+                    <h:outputText value="#{plan.getDateString()}" />
+                </p:column>
+
+                <p:column headerText="Time">
+                    <h:outputText value="#{plan.getTimeString()}" />
+                </p:column>
+
+                <p:column headerText="Repeat">
+                    <h:outputText value="#{plan.getRepeatString()}" />
+                </p:column>
+
+                <p:column headerText="Priority">
+                    <h:outputText value="#{plan.getPriorityString()}" />
+                </p:column>
+
+                <p:column headerText="completed">
+                    <p:selectBooleanCheckbox id="active" value="#{plan.getCompleted()}" disabled="true" />
+                </p:column>
+
+                <p:column headerText="edit?">
+                    <h:commandButton type="submit" value="View" style="background-color: yellow" 
+                                     action="#{plansManagedBean.viewPlan(plan.id)}"/>
+                </p:column>
+
+                <p:column headerText="delete?">
+                    <h:commandButton type="submit" value="del" style="background-color: red" 
+                                     action="#{plansManagedBean.deletePlan(plan.id)}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

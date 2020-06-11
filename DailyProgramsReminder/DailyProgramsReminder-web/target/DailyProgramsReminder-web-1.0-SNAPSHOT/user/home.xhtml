@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Daily Programs Reminder</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1>Daily Programs Reminder - Dashboard</h1>
+            <h2>Welcome back, #{userManagedBean.firstname} #{userManagedBean.lastname}</h2>
+            <br />
+            <p:panelGrid columns="4" layout="grid" style="text-align: center;">
+                <p:link outcome="plans" value="View All Plans" />
+                <p:link outcome="newPlanAngularJS.html" value="Create a New Plan" />
+                <p:link outcome="profile" value="View User Profile" />
+                <h:commandButton id="logout" value="Logout" style="cursor: pointer; 
+                                 font-size: 18px; border: none; background-color: white; color: red; 
+                                 text-decoration: underline"
+                                 action="#{userManagedBean.logoutResult()}"/>
+            </p:panelGrid>
+            <br />
+            <h3>List of today plans: #{plansManagedBean.today()}</h3>
+            <p:dataTable var="plan" value="#{plansManagedBean.getTodayPlans()}" style="text-align: center;">
+                <p:column headerText="ID">
+                    <h:outputText value="#{plan.getId()}" />
+                </p:column>
+
+                <p:column headerText="Title">
+                    <h:outputText value="#{plan.getTitle()}" />
+                </p:column>
+
+                <p:column headerText="Date">
+                    <h:outputText value="#{plan.getDateString()}" />
+                </p:column>
+
+                <p:column headerText="Time">
+                    <h:outputText value="#{plan.getTimeString()}" />
+                </p:column>
+
+                <p:column headerText="Repeat">
+                    <h:outputText value="#{plan.getRepeatString()}" />
+                </p:column>
+
+                <p:column headerText="Priority">
+                    <h:outputText value="#{plan.getPriorityString()}" />
+                </p:column>
+
+                <p:column headerText="completed">
+                    <p:selectBooleanCheckbox id="active" value="#{plan.getCompleted()}" disabled="true" />
+                </p:column>
+
+                <p:column headerText="edit?">
+                    <h:commandButton type="submit" value="view" style="background-color: yellow" 
+                                     action="#{plansManagedBean.viewPlan(plan.getId())}"/>
+                </p:column>
+
+                <p:column headerText="delete?">
+                    <h:commandButton type="submit" value="del" style="background-color: red" 
+                                     action="#{plansManagedBean.deletePlan(plan.getId())}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
